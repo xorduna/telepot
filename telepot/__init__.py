@@ -269,12 +269,12 @@ class Bot(_BotBase):
         Event.__lt__ = lambda self, other: self.timestamp < other.timestamp
         Event.__le__ = lambda self, other: self.timestamp <= other.timestamp
 
-        def __init__(self, endpoint="https://api.telegram.org"):
+        def __init__(self):
             super(Bot.Scheduler, self).__init__()
             self._eventq = []
             self._lock = threading.RLock()  # reentrant lock to allow locked method calling locked method
             self._output_queue = None
-            api.ENDPOINT = endpoint
+
 
         def _locked(fn):
             def k(self, *args, **kwargs):
@@ -371,9 +371,9 @@ class Bot(_BotBase):
                     e = self._pop_expired_event()
                 time.sleep(0.1)
 
-    def __init__(self, token):
+    def __init__(self, token, endpoint="https://api.telegram.org/"):
         super(Bot, self).__init__(token)
-
+        api.ENDPOINT = endpoint
         self._scheduler = self.Scheduler()
 
         self._router = helper.Router(flavor, {'chat': lambda msg: self.on_chat_message(msg),
