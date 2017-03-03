@@ -23,11 +23,9 @@ def _create_onetime_pool():
 def _methodurl(req, **user_kw):
     token, method, params, files = req
     url = '%sbot%s/%s' % (ENDPOINT, token, method)
-    print(url)
     return url
+    # original code
     #return 'https://api.telegram.org/bot%s/%s' % (token, method)
-    #return 'https://telemock.ngrok.io/bot%s/%s' % (token, method)
-    #return 'https://telemock.ngrok.io/%s' % (method)
 
 def _which_pool(req, **user_kw):
     token, method, params, files = req
