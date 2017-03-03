@@ -269,11 +269,12 @@ class Bot(_BotBase):
         Event.__lt__ = lambda self, other: self.timestamp < other.timestamp
         Event.__le__ = lambda self, other: self.timestamp <= other.timestamp
 
-        def __init__(self):
+        def __init__(self, endpoint="https://api.telegram.org"):
             super(Bot.Scheduler, self).__init__()
             self._eventq = []
             self._lock = threading.RLock()  # reentrant lock to allow locked method calling locked method
             self._output_queue = None
+            api.ENDPOINT = endpoint
 
         def _locked(fn):
             def k(self, *args, **kwargs):

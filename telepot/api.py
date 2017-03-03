@@ -7,6 +7,7 @@ from . import exception, _isstring
 # Suppress InsecurePlatformWarning
 urllib3.disable_warnings()
 
+ENDPOINT = "https://api.telegram.org/"
 
 _pools = {
     'default': urllib3.PoolManager(num_pools=3, maxsize=10, retries=3, timeout=30),
@@ -21,9 +22,10 @@ def _create_onetime_pool():
 
 def _methodurl(req, **user_kw):
     token, method, params, files = req
+    return '%sbot%s/%s' % (ENDPOINT, token, method)
     #return 'https://api.telegram.org/bot%s/%s' % (token, method)
     #return 'https://telemock.ngrok.io/bot%s/%s' % (token, method)
-    return 'https://telemock.ngrok.io/%s' % (method)
+    #return 'https://telemock.ngrok.io/%s' % (method)
 
 def _which_pool(req, **user_kw):
     token, method, params, files = req
